@@ -5,12 +5,22 @@
 </template>
 
 <script>
-  import {mapGetters} from 'vuex';
+  // import {mapGetters} from 'vuex';
 
  export default {
    name: 'Profile',
-   computed: {
-     ...mapGetters(['user'])
+   data(){
+     return{
+
+     }
    }
+   // computed: {
+   //   ...mapGetters(['user'])
+   // },
+   // mounted(){
+   //     if (!this.user){
+   //         this.$router.push('/');
+   //     }
+   // }
  }
 </script>

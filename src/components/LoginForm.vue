@@ -2,34 +2,44 @@
   <div>
     <form @submit.prevent="login">
       <label>phone</label>
-      <input type="text" required v-model="phone">
-      <label>password</label>
-      <input type="password" required v-model="password">
+      <input type="text" required v-model="mobile">
       <button type="submit">login</button>
     </form>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
+import Config from "@/config/config";
+
+
 export default {
   name: 'login',
   data(){
     return{
-      phone: '',
-      password: ''
+      mobile: '',
+      password: '',
+      config: new Config()
     }
   },
+
   methods: {
     async login(){
-      const response = await axios.post('oauth/token', {
-        phone: this.phone,
-        password: this.password
-      })
+      let configData = {
+        mobile: this.mobile
+      }
+      let cmd = 'auth.reg.mobile'
+      const response = await axios.post('api/lwl/app', this.config.data(configData, cmd))
 
-      localStorage.setItem('token', response.data.token);
-      this.$router.dispatch('user', response.data.user);
-      this.$router.push('/profile');
+      if (response.data.error){
+        console.log(response)
+      }else{
+        sessionStorage.setItem('mobile', this.mobile);
+      }
+
+      if(sessionStorage.getItem('mobile') != null){
+        this.$router.push('/otp');
+      }
     }
 
   }
