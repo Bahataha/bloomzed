@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">bloomzed</string>
+    <string name="title_activity_main">bloomzed</string>
+    <string name="package_name">com.bloomzed.app</string>
+    <string name="custom_url_scheme">com.bloomzed.app</string>
+</resources>

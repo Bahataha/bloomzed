@@ -1,26 +1,31 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/profile">profile</router-link>
+  <div class="">
+<!--    <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>-->
+    <div id="page">
+      <router-view />
     </div>
-    <router-view />
   </div>
 </template>
 
+<!--<script type="text/javascript" src="@/assets/scripts/bootstrap.min.js"></script>-->
+<!--<script type="text/javascript" src="@/assets/scripts/custom.js"></script>-->
 <script>
+// import './assets/scripts/bootstrap.min'
+// import './assets/scripts/custom'
 // import axios from "axios";
 
 export default {
   name: 'App',
-  async created(){
-    // const response = await axios.get('user');
-    //
-    // this.$store.dispatch('user', response.data)
+  mounted() {
+    document.body.classList.add('theme-light')
   }
 }
 </script>
 
+<style>@import './assets/styles/bootstrap.css';</style>
+<style>@import './assets/styles/style.css';</style>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>@import './assets/fonts/css/fontawesome-all.min.css';</style>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

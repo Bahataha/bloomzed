@@ -29,7 +29,9 @@ export default {
     PasswForm
   },
   mounted(){
-
+    if(sessionStorage.getItem('session')){
+      this.$router.push('/profile');
+    }
   }
 }
 </script>
