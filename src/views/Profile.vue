@@ -9,7 +9,7 @@
       <div class="content">
         <h1 class="text-center font-30 mb-n1">Кошелек</h1>
         <p class="font-40 text-center pt-3">
-          {{response.data.json.balances[0].balance}}
+          {{numberWithSpaces(response.data.json.balances[0].balance)}}
           <sup class="price-sup font-14">{{response.data.json.balances[0].currency}}</sup>
         </p>
       </div>
@@ -19,7 +19,6 @@
 </template>
 
 <script>
-  // import {mapGetters} from 'vuex';
 import Footer from "@/components/Footer";
 import axios from "axios";
 import Config from "@/config/config";
@@ -49,6 +48,11 @@ export default {
     }
     axios.post('api/lwl/app', this.config.data(configData, cmd)).then(response => (this.response = response))
 
+  },
+  methods:{
+    numberWithSpaces(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    }
   }
     // computed: {
    //   ...mapGetters(['user'])

@@ -13,7 +13,7 @@
               These boxes will react to them when you type or select a value.
             </p>
             <div class="input-style has-borders no-icon validate-field mb-4">
-              <input type="tel" class="form-control validate-text" id="form4" placeholder="Password" v-model="password">
+              <input type="password" class="form-control validate-text" id="form4" placeholder="Password" v-model="password">
               <label for="form4" class="color-highlight">Password</label>
               <i class="fa fa-times disabled invalid color-red-dark"></i>
               <i class="fa fa-check disabled valid color-green-dark"></i>

@@ -72,7 +72,7 @@ export default {
       }
       else if(response.data.json.passw){
         sessionStorage.setItem('mobile', '7' + this.mobile);
-        // window.location.reload();
+        window.location.reload();
       }
       else{
         this.items = []
