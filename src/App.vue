@@ -10,8 +10,11 @@
 <!--<script type="text/javascript" src="@/assets/scripts/bootstrap.min.js"></script>-->
 <!--<script type="text/javascript" src="@/assets/scripts/custom.js"></script>-->
 <script>
-// import './assets/scripts/bootstrap.min'
+import 'bootstrap/dist/js/bootstrap.min'
+// require('./assets/scripts/bootstrap.min')
 // import './assets/scripts/custom'
+
+
 // import axios from "axios";
 
 export default {
@@ -24,6 +27,7 @@ export default {
 
 <style>@import './assets/styles/bootstrap.css';</style>
 <style>@import './assets/styles/style.css';</style>
+<style>@import "./assets/fonts/css/all.css";</style>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>@import './assets/fonts/css/fontawesome-all.min.css';</style>
 <style>

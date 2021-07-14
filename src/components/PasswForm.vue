@@ -19,6 +19,9 @@
               <i class="fa fa-check disabled valid color-green-dark"></i>
               <em>(required)</em>
             </div>
+            <span v-for="item in errors" v-bind:key="item" style="color: red">
+              {{item}}
+            </span>
             <div class="input-style has-borders no-icon validate-field mb-4">
               <button class="btn btn-m btn-full mb-3 rounded-xs text-uppercase font-900 shadow-s bg-green-dark" style="width: 100%" type="submit" >login</button>
             </div>
@@ -42,23 +45,34 @@ export default {
   data(){
     return{
       password: '',
-      config: new Config()
+      config: new Config(),
+      errors: []
     }
   },
   methods:{
+    addError(){
+      this.item = [];
+    },
     async passwordForm(){
-      this.password = sha256(md5(this.password).toString()).toString()
+      var pass = sha256(md5(this.password).toString()).toString()
       let configData = {
         mobile: sessionStorage.getItem('mobile'),
-        'passw': this.password
+        'passw': pass
       }
       let cmd = 'authRegMobilePassw'
       const response = await axios.post('api/lwl/app', this.config.data(configData, cmd));
-
-      if (response.data.json.session){
+      if('error' in response.data){
+        document.getElementById("form4").className = document.getElementById("form4").className + " error";
+        this.errors = []
+        this.item = response.data.error.message
+        this.errors.push(this.item);
+        console.log(response.data.error)
+      }
+      else if (response.data.json.session){
         sessionStorage.setItem('session', response.data.json.session);
         sessionStorage.setItem('user', JSON.stringify(response.data.json));
       }
+
       if(sessionStorage.getItem('session')){
         this.$router.push('/profile');
       }
@@ -68,5 +82,7 @@ export default {
 </script>
 
 <style scoped>
-
+.error {
+  border-color:red !important;
+}
 </style>

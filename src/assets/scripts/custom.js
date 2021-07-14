@@ -1,3 +1,4 @@
+import bootstrap from 'bootstrap/dist/js/bootstrap.min'
 //Removing Preloader
 setTimeout(function(){
     var preloader = document.getElementById('preloader')
@@ -21,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //Place all your custom Javascript functions and plugin calls below this line
     function init_template(){
         //Caching Global Variables
-        var i, e, el; //https://www.w3schools.com/js/js_performance.asp
+        // var i, e, el; //https://www.w3schools.com/js/js_performance.asp
 
         //Attaching Menu Hider
         var menuHider = document.getElementsByClassName('menu-hider');
@@ -33,34 +34,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
         //Activating Menus
         document.querySelectorAll('.menu').forEach(el=>{el.style.display='block'})
-
+        function valid(el){
+            el.parentElement.querySelectorAll('.valid')[0].classList.remove('disabled');
+            el.parentElement.querySelectorAll('.invalid')[0].classList.add('disabled');
+        }
+        function invalid(el){
+            el.parentElement.querySelectorAll('.valid')[0].classList.add('disabled');
+            el.parentElement.querySelectorAll('.invalid')[0].classList.remove('disabled');
+        }
+        function unfilled(el){
+            el.parentElement.querySelectorAll('em')[0].classList.remove('disabled');
+            el.parentElement.querySelectorAll('.valid')[0].classList.add('disabled');
+            el.parentElement.querySelectorAll('.invalid')[0].classList.add('disabled');
+        }
         //Validator
         var inputField = document.querySelectorAll('input');
         if(inputField.length){
             var mailValidator = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
-            var phoneValidator = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
+            var phoneValidator = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s.]{0,1}[0-9]{3}[-\s.]{0,1}[0-9]{4}$/;
             var nameValidator = /^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$/u;
             var passwordValidator = /[A-Za-z]{2}[A-Za-z]*[ ]?[A-Za-z]*/;
             var numberValidator = /^(0|[1-9]\d*)$/;
-            var linkValidator = /^(http|https)?:\/\/[a-zA-Z0-9-\.]+\.[a-z]{2,4}/;
+            var linkValidator = /^(http|https)?:\/\/[a-zA-Z0-9-.]+\.[a-z]{2,4}/;
             var textValidator = /[A-Za-z]{2}[A-Za-z]*[ ]?[A-Za-z]*/;
 
-            function valid(el){
-                el.parentElement.querySelectorAll('.valid')[0].classList.remove('disabled');
-                el.parentElement.querySelectorAll('.invalid')[0].classList.add('disabled');
-            }
-            function invalid(el){
-                el.parentElement.querySelectorAll('.valid')[0].classList.add('disabled');
-                el.parentElement.querySelectorAll('.invalid')[0].classList.remove('disabled');
-            }
-            function unfilled(el){
-                el.parentElement.querySelectorAll('em')[0].classList.remove('disabled');
-                el.parentElement.querySelectorAll('.valid')[0].classList.add('disabled');
-                el.parentElement.querySelectorAll('.invalid')[0].classList.add('disabled');
-            }
+
 
             var regularField = document.querySelectorAll('.input-style input:not([type="date"])')
             regularField.forEach(el => el.addEventListener('keyup', e => {
+                console.log(e)
                 if(!el.value == ""){
                     el.parentElement.classList.add('input-style-active');
                     el.parentElement.querySelector('em').classList.add('disabled');
@@ -74,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             var regularTextarea = document.querySelectorAll('.input-style textarea')
             regularTextarea.forEach(el => el.addEventListener('keyup', e => {
+                console.log(e)
                 if(!el.value == ""){
                     el.parentElement.classList.add('input-style-active');
                     el.parentElement.querySelector('em').classList.add('disabled');
@@ -85,6 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             var selectField = document.querySelectorAll('.input-style select')
             selectField.forEach(el => el.addEventListener('change', e => {
+                console.log(e)
                 if(el.value !== "default"){
                     el.parentElement.classList.add('input-style-active');
                     el.parentElement.querySelectorAll('.valid')[0].classList.remove('disabled');
@@ -99,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             var dateField = document.querySelectorAll('.input-style input[type="date"]')
             dateField.forEach(el => el.addEventListener('change', e => {
+                console.log(e)
                 el.parentElement.classList.add('input-style-active');
                 el.parentElement.querySelectorAll('.valid')[0].classList.remove('disabled');
                 el.parentElement.querySelectorAll('.invalid')[0].classList.add('disabled');
@@ -107,6 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
             var validateField = document.querySelectorAll('.validate-field input, .validator-field textarea');
             if(validateField.length){
                 validateField.forEach(el => el.addEventListener('keyup', e => {
+                    console.log(e)
                     var getAttribute = el.getAttribute('type');
                     switch(getAttribute){
                         case 'name': nameValidator.test(el.value) ? valid(el) : invalid(el); break;
@@ -125,84 +131,84 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         //Image Sliders
-        var splide = document.getElementsByClassName('splide');
-        if(splide.length){
-            var singleSlider = document.querySelectorAll('.single-slider');
-            if(singleSlider.length){
-                singleSlider.forEach(function(e){
-                    var single = new Splide( '#'+e.id, {
-                        type:'loop',
-                        autoplay:true,
-                        interval:4000,
-                        perPage: 1,
-                    }).mount();
-                    var sliderNext = document.querySelectorAll('.slider-next');
-                    var sliderPrev = document.querySelectorAll('.slider-prev');
-                    sliderNext.forEach(el => el.addEventListener('click', el => {single.go('>');}));
-                    sliderPrev.forEach(el => el.addEventListener('click', el => {single.go('<');}));
-                });
-            }
-
-            var doubleSlider = document.querySelectorAll('.double-slider');
-            if(doubleSlider.length){
-                doubleSlider.forEach(function(e){
-                     var double = new Splide( '#'+e.id, {
-                        type:'loop',
-                        autoplay:true,
-                        interval:4000,
-                        arrows:false,
-                        perPage: 2,
-                    }).mount();
-                });
-            }
-
-            var trippleSlider = document.querySelectorAll('.tripple-slider');
-            if(trippleSlider.length){
-                trippleSlider.forEach(function(e){
-                     var tripple = new Splide( '#'+e.id, {
-                        type:'loop',
-                        autoplay:true,
-                        padding: {
-                            left   :'0px',
-                            right: '80px',
-                        },
-                        interval:4000,
-                        arrows:false,
-                        perPage: 2,
-                        perMove: 1,
-                    }).mount();
-                });
-            }
-        }
-
-        var topicSlider = document.querySelectorAll('.topic-slider');
-        if(topicSlider.length){
-             var topic = new Splide( '.topic-slider', {
-                type:'loop',
-                autoplay:false,
-                padding: {
-                    left   :'15px',
-                    right: '40px',
-                },
-                arrows:false,
-                perPage: 3,
-                perMove: 1,
-            }).mount();
-        }
-        var storySlider = document.querySelectorAll('.story-slider');
-        if(storySlider.length){
-             var topic = new Splide( '.story-slider', {
-                type:'loop',
-                autoplay:false,
-                padding: {
-                    left   :'0px',
-                    right: '40px',
-                },
-                arrows:false,
-                perPage: 4,
-                perMove: 1,
-            }).mount();
-        }
+        // var splide = document.getElementsByClassName('splide');
+        // if(splide.length){
+        //     var singleSlider = document.querySelectorAll('.single-slider');
+        //     if(singleSlider.length){
+        //         singleSlider.forEach(function(e){
+        //             var single = new Splide( '#'+e.id, {
+        //                 type:'loop',
+        //                 autoplay:true,
+        //                 interval:4000,
+        //                 perPage: 1,
+        //             }).mount();
+        //             var sliderNext = document.querySelectorAll('.slider-next');
+        //             var sliderPrev = document.querySelectorAll('.slider-prev');
+        //             sliderNext.forEach(el => el.addEventListener('click', el => {single.go('>');}));
+        //             sliderPrev.forEach(el => el.addEventListener('click', el => {single.go('<');}));
+        //         });
+        //     }
+        //
+        //     var doubleSlider = document.querySelectorAll('.double-slider');
+        //     if(doubleSlider.length){
+        //         doubleSlider.forEach(function(e){
+        //              var double = new Splide( '#'+e.id, {
+        //                 type:'loop',
+        //                 autoplay:true,
+        //                 interval:4000,
+        //                 arrows:false,
+        //                 perPage: 2,
+        //             }).mount();
+        //         });
+        //     }
+        //
+        //     var trippleSlider = document.querySelectorAll('.tripple-slider');
+        //     if(trippleSlider.length){
+        //         trippleSlider.forEach(function(e){
+        //              var tripple = new Splide( '#'+e.id, {
+        //                 type:'loop',
+        //                 autoplay:true,
+        //                 padding: {
+        //                     left   :'0px',
+        //                     right: '80px',
+        //                 },
+        //                 interval:4000,
+        //                 arrows:false,
+        //                 perPage: 2,
+        //                 perMove: 1,
+        //             }).mount();
+        //         });
+        //     }
+        // }
+        //
+        // var topicSlider = document.querySelectorAll('.topic-slider');
+        // if(topicSlider.length){
+        //      var topic = new Splide( '.topic-slider', {
+        //         type:'loop',
+        //         autoplay:false,
+        //         padding: {
+        //             left   :'15px',
+        //             right: '40px',
+        //         },
+        //         arrows:false,
+        //         perPage: 3,
+        //         perMove: 1,
+        //     }).mount();
+        // }
+        // var storySlider = document.querySelectorAll('.story-slider');
+        // if(storySlider.length){
+        //      var topic = new Splide( '.story-slider', {
+        //         type:'loop',
+        //         autoplay:false,
+        //         padding: {
+        //             left   :'0px',
+        //             right: '40px',
+        //         },
+        //         arrows:false,
+        //         perPage: 4,
+        //         perMove: 1,
+        //     }).mount();
+        // }
 
 
         //Don't jump on Empty Links
@@ -217,12 +223,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if(fullMap.length){
             var mapActivator = document.querySelectorAll('.show-map');
             var mapDisabler = document.querySelectorAll('.hide-map');
-            mapActivator[0].addEventListener('click',function(e){
+            mapActivator[0].addEventListener('click',function(){
                document.getElementsByClassName('card-overlay')[0].classList.add('disabled');
                document.getElementsByClassName('card-center')[0].classList.add('disabled');
                document.getElementsByClassName('hide-map')[0].classList.remove('disabled');
             })
-            mapDisabler[0].addEventListener('click',function(e){
+            mapDisabler[0].addEventListener('click',function(){
                document.getElementsByClassName('card-overlay')[0].classList.remove('disabled');
                document.getElementsByClassName('card-center')[0].classList.remove('disabled');
                document.getElementsByClassName('hide-map')[0].classList.add('disabled');
@@ -231,6 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         var checkedCard = document.querySelectorAll('.check-card');
         checkedCard.forEach(el => el.addEventListener('click', e => {
+            console.log(e)
             if(el.querySelector('input').getAttribute('checked') =="checked"){
                 el.querySelector('input').removeAttribute('checked');
             } else {
@@ -243,6 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //To Do List
         var toDoList = document.querySelectorAll('.todo-list a');
         toDoList.forEach(el => el.addEventListener('click', e => {
+            console.log(e)
             el.classList.toggle('opacity-80');
             if(el.querySelector('input').getAttribute('checked') == "checked"){
                 el.querySelector('input').removeAttribute('checked');
@@ -279,6 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 var wrappers = document.querySelectorAll('.header, #footer-bar, .page-content');
 
                 menuOpen.forEach(el => el.addEventListener('click',e =>{
+                    console.log(e)
                     //Close Existing Opened Menus
                     const activeMenu = document.querySelectorAll('.menu-active');
                     for(let i=0; i < activeMenu.length; i++){activeMenu[i].classList.remove('menu-active');}
@@ -305,14 +314,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
 
                     if(menuEffect === "menu-push"){
-                        var menuWidth = document.getElementById(menuData).getAttribute('data-menu-width');
+                        menuWidth = document.getElementById(menuData).getAttribute('data-menu-width');
                         if(menuLeft){for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateX("+menuWidth+"px)"}}
                         if(menuRight){for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateX(-"+menuWidth+"px)"}}
                         if(menuBottom){for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateY(-"+menuHeight+"px)"}}
                         if(menuTop){for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateY("+menuHeight+"px)"}}
                     }
                     if(menuEffect === "menu-parallax"){
-                        var menuWidth = document.getElementById(menuData).getAttribute('data-menu-width');
+                        menuWidth = document.getElementById(menuData).getAttribute('data-menu-width');
                         if(menuLeft){for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateX("+menuWidth/10+"px)"}}
                         if(menuRight){for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateX(-"+menuWidth/10+"px)"}}
                         if(menuBottom){for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateY(-"+menuHeight/5+"px)"}}
@@ -323,6 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 //Closing Menus
                 const menuClose = document.querySelectorAll('.close-menu, .menu-hider');
                 menuClose.forEach(el => el.addEventListener('click',e =>{
+                    console.log(e)
                     const activeMenu = document.querySelectorAll('.menu-active');
                     for(let i=0; i < activeMenu.length; i++){activeMenu[i].classList.remove('menu-active');}
                     for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateX(-"+0+"px)"}
@@ -355,6 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const backToTop = document.querySelectorAll('.back-to-top-icon, .back-to-top-badge, .back-to-top');
             if(backToTop){
                 backToTop.forEach(el => el.addEventListener('click',e =>{
+                    console.log(e)
                     window.scrollTo({ top: 0, behavior: `smooth` })
                 }));
             }
@@ -363,8 +374,8 @@ document.addEventListener('DOMContentLoaded', () => {
         //Card Extender
         const cards = document.getElementsByClassName('card');
         function card_extender(){
-            var headerHeight, footerHeight, headerOnPage;
-            var headerOnPage = document.querySelectorAll('.header:not(.header-transparent)')[0];
+            var headerHeight, footerHeight, headerOnPage, coverHeight, windowHeight;
+            headerOnPage = document.querySelectorAll('.header:not(.header-transparent)')[0];
             var footerOnPage = document.querySelectorAll('#footer-bar')[0];
 
             headerOnPage ? headerHeight = document.querySelectorAll('.header')[0].offsetHeight : headerHeight = 0
@@ -372,26 +383,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
             for (let i = 0; i < cards.length; i++) {
                 if(cards[i].getAttribute('data-card-height') === "cover"){
-                    if (window.matchMedia('(display-mode: fullscreen)').matches) {var windowHeight = window.outerHeight;}
-                    if (!window.matchMedia('(display-mode: fullscreen)').matches) {var windowHeight = window.innerHeight;}
-                    var coverHeight = windowHeight - headerHeight - footerHeight + 'px';
+                    if (window.matchMedia('(display-mode: fullscreen)').matches) {windowHeight = window.outerHeight;}
+                    if (!window.matchMedia('(display-mode: fullscreen)').matches) {windowHeight = window.innerHeight;}
+                    coverHeight = windowHeight - headerHeight - footerHeight + 'px';
                 }
                 if(cards[i].getAttribute('data-card-height') === "cover-card"){
-                    var windowHeight = window.outerHeight;
-                    var coverHeight = windowHeight - 275 + 'px';
+                    windowHeight = window.outerHeight;
+                    coverHeight = windowHeight - 275 + 'px';
                     cards[i].style.height =  coverHeight
                 }
                 if(cards[i].getAttribute('data-card-height') === "cover-full"){
-                    if (window.matchMedia('(display-mode: fullscreen)').matches) {var windowHeight = window.outerHeight;}
-                    if (!window.matchMedia('(display-mode: fullscreen)').matches) {var windowHeight = window.innerHeight;}
-                    var coverHeight = windowHeight + 'px';
+                    if (window.matchMedia('(display-mode: fullscreen)').matches) {windowHeight = window.outerHeight;}
+                    if (!window.matchMedia('(display-mode: fullscreen)').matches) {windowHeight = window.innerHeight;}
+                    coverHeight = windowHeight + 'px';
                     cards[i].style.height =  coverHeight
                 }
                 if(cards[i].hasAttribute('data-card-height')){
                     var getHeight = cards[i].getAttribute('data-card-height');
                     cards[i].style.height= getHeight +'px';
                     if(getHeight === "cover"){
-                        var totalHeight = getHeight
+                        // var totalHeight = getHeight
                         cards[i].style.height =  coverHeight
                     }
                 }
@@ -416,6 +427,7 @@ document.addEventListener('DOMContentLoaded', () => {
         function highlightColors(){
             var highlightData = document.querySelectorAll('[data-change-highlight]');
             highlightData.forEach(el => el.addEventListener('click', e =>{
+                console.log(e)
                 const activeHighlight = document.querySelectorAll('.highlight-active');
                 for(let i=0; i < activeHighlight.length; i++){activeHighlight[i].classList.remove('highlight-active');}
                 el.classList.add('highlight-active');
@@ -450,6 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //Background Gradient Color
         var gradientData = document.querySelectorAll('[data-change-background]');
         gradientData.forEach(el => el.addEventListener('click',e =>{
+            console.log(e)
             var gradient = el.getAttribute('data-change-background');
             document.body.setAttribute('data-gradient', 'body-'+gradient+'');
             localStorage.setItem(pwaName+'-Gradient', gradient)
@@ -466,13 +479,13 @@ document.addEventListener('DOMContentLoaded', () => {
             function activateDarkMode(){
                 document.body.classList.add('theme-dark');
                 document.body.classList.remove('theme-light', 'detect-theme');
-                for(let i = 0; i < toggleDark.length; i++){toggleDark[i].checked="checked"};
+                for(let i = 0; i < toggleDark.length; i++){toggleDark[i].checked="checked"}
                 localStorage.setItem(pwaName+'-Theme', 'dark-mode');
             }
             function activateLightMode(){
                 document.body.classList.add('theme-light');
                 document.body.classList.remove('theme-dark','detect-theme');
-                for(let i = 0; i < toggleDark.length; i++){toggleDark[i].checked=false};
+                for(let i = 0; i < toggleDark.length; i++){toggleDark[i].checked=false}
                 localStorage.setItem(pwaName+'-Theme', 'light-mode');
             }
             function removeTransitions(){var falseTransitions = document.querySelectorAll('.btn, .header, #footer-bar, .menu-box, .menu-active'); for(let i = 0; i < falseTransitions.length; i++) {falseTransitions[i].style.transition = "all 0s ease";}}
@@ -481,7 +494,7 @@ document.addEventListener('DOMContentLoaded', () => {
             function setColorScheme() {
                 const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches
                 const isLightMode = window.matchMedia("(prefers-color-scheme: light)").matches
-                const isNoPreference = window.matchMedia("(prefers-color-scheme: no-preference)").matches
+                // const isNoPreference = window.matchMedia("(prefers-color-scheme: no-preference)").matches
                 window.matchMedia("(prefers-color-scheme: dark)").addListener(e => e.matches && activateDarkMode())
                 window.matchMedia("(prefers-color-scheme: light)").addListener(e => e.matches && activateLightMode())
                 if(isDarkMode) activateDarkMode();
@@ -491,18 +504,20 @@ document.addEventListener('DOMContentLoaded', () => {
             //Activating Dark Mode
             var darkModeSwitch = document.querySelectorAll('[data-toggle-theme]')
             darkModeSwitch.forEach(el => el.addEventListener('click',e =>{
+                console.log(e)
                 if(document.body.className == "theme-light"){ removeTransitions(); activateDarkMode();}
                 else if(document.body.className == "theme-dark"){ removeTransitions(); activateLightMode();}
                 setTimeout(function(){addTransitions();},350);
             }));
 
             //Set Color Based on Remembered Preference.
-            if(localStorage.getItem(pwaName+'-Theme') == "dark-mode"){for(let i = 0; i < toggleDark.length; i++){toggleDark[i].checked="checked"};document.body.className = 'theme-dark';}
+            if(localStorage.getItem(pwaName+'-Theme') == "dark-mode"){for(let i = 0; i < toggleDark.length; i++){toggleDark[i].checked="checked"}document.body.className = 'theme-dark';}
             if(localStorage.getItem(pwaName+'-Theme') == "light-mode"){document.body.className = 'theme-light';} if(document.body.className == "detect-theme"){setColorScheme();}
 
             //Detect Dark/Light Mode
             const darkModeDetect = document.querySelectorAll('.detect-dark-mode');
             darkModeDetect.forEach(el => el.addEventListener('click',e =>{
+                console.log(e)
                 document.body.classList.remove('theme-light', 'theme-dark');
                 document.body.classList.add('detect-theme')
                 setTimeout(function(){setColorScheme();},50)
@@ -516,29 +531,51 @@ document.addEventListener('DOMContentLoaded', () => {
         const accordionBtn = document.querySelectorAll('.accordion-btn');
         if(accordionBtn.length){
             accordionBtn.forEach(el => el.addEventListener('click', event => {
+                console.log(event)
                 el.querySelector('i:last-child').classList.toggle('fa-rotate-180');
             }));
         }
-
+        function prepareUpload(event){
+            if (this.files && this.files[0]) {
+                var img = document.getElementById('image-data');
+                img.src = URL.createObjectURL(this.files[0]);
+            }
+            const files = event.target.files;
+            // const fileName = files[0].name;
+            document.getElementsByClassName('file-data')[0].classList.add('disabled');
+            document.getElementsByClassName('upload-file-data')[0].classList.remove('disabled');
+            document.getElementsByClassName('upload-file-name')[0].innerHTML = files[0].name;
+            document.getElementsByClassName('upload-file-modified')[0].innerHTML = files[0].lastModifiedDate;
+            document.getElementsByClassName('upload-file-size')[0].innerHTML = files[0].size/1000+'kb';
+            document.getElementsByClassName('upload-file-type')[0].innerHTML = files[0].type;
+        }
         //File Upload
         const inputArray = document.getElementsByClassName('upload-file');
         if(inputArray.length){
             inputArray[0].addEventListener('change',prepareUpload,false);
-                function prepareUpload(event){
-                  if (this.files && this.files[0]) {
-                  var img = document.getElementById('image-data');
-                  img.src = URL.createObjectURL(this.files[0]);
-              }
-                const files = event.target.files;
-                const fileName = files[0].name;
-                document.getElementsByClassName('file-data')[0].classList.add('disabled');
-                document.getElementsByClassName('upload-file-data')[0].classList.remove('disabled');
-                document.getElementsByClassName('upload-file-name')[0].innerHTML = files[0].name;
-                document.getElementsByClassName('upload-file-modified')[0].innerHTML = files[0].lastModifiedDate;
-                document.getElementsByClassName('upload-file-size')[0].innerHTML = files[0].size/1000+'kb';
-                document.getElementsByClassName('upload-file-type')[0].innerHTML = files[0].type;
-            }
 
+
+        }
+        function geoLocate() {
+            const locationCoordinates = document.querySelector('.location-coordinates');
+            function success(position) {
+                const latitude  = position.coords.latitude;
+                const longitude = position.coords.longitude;
+                locationCoordinates.innerHTML = '<strong>Longitude:</strong> ' + longitude + '<br><strong>Latitude:</strong> '+ latitude;
+                var mapL1 = 'https://www.google.com/maps/embed/v1/view?key=AIzaSyAM3nxDVrkjyKwdIZp8QOplmBKLRVI5S_Y&center=';
+                var mapL2 = latitude+',';
+                var mapL3 = longitude;
+                var mapL4 = '&zoom=16&maptype=satellite'
+                var mapL5 = ''
+                var mapLinkEmbed = mapL1 + mapL2 + mapL3 + mapL4;
+                var mapLinkAddress = mapL1 + mapL2 + mapL3 + mapL5;
+                document.getElementsByClassName('location-map')[0].setAttribute('src',mapLinkEmbed);
+                document.getElementsByClassName('location-button')[0].setAttribute('href',mapLinkAddress);
+                document.getElementsByClassName('location-button')[0].classList.remove('disabled');
+            }
+            function error() {locationCoordinates.textContent = 'Unable to retrieve your location';}
+            if (!navigator.geolocation) {locationCoordinates.textContent = 'Geolocation is not supported by your browser';}
+            else {locationCoordinates.textContent = 'Locating';navigator.geolocation.getCurrentPosition(success, error);}
         }
         var locationBut = document.querySelectorAll('.get-location');
         if(locationBut.length){
@@ -551,27 +588,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     locationSupport.innerHTML = 'Your browser and device <strong class="color-red2-dark">support</strong> Geolocation.';
                 }
             }
-            function geoLocate() {
-                const locationCoordinates = document.querySelector('.location-coordinates');
-                function success(position) {
-                    const latitude  = position.coords.latitude;
-                    const longitude = position.coords.longitude;
-                    locationCoordinates.innerHTML = '<strong>Longitude:</strong> ' + longitude + '<br><strong>Latitude:</strong> '+ latitude;
-                    var mapL1 = 'https://www.google.com/maps/embed/v1/view?key=AIzaSyAM3nxDVrkjyKwdIZp8QOplmBKLRVI5S_Y&center=';
-                    var mapL2 = latitude+',';
-                    var mapL3 = longitude;
-                    var mapL4 = '&zoom=16&maptype=satellite'
-                    var mapL5 = ''
-                    var mapLinkEmbed = mapL1 + mapL2 + mapL3 + mapL4;
-                    var mapLinkAddress = mapL1 + mapL2 + mapL3 + mapL5;
-                    document.getElementsByClassName('location-map')[0].setAttribute('src',mapLinkEmbed);
-                    document.getElementsByClassName('location-button')[0].setAttribute('href',mapLinkAddress);
-                    document.getElementsByClassName('location-button')[0].classList.remove('disabled');
-                }
-                function error() {locationCoordinates.textContent = 'Unable to retrieve your location';}
-                if (!navigator.geolocation) {locationCoordinates.textContent = 'Geolocation is not supported by your browser';}
-                else {locationCoordinates.textContent = 'Locating';navigator.geolocation.getCurrentPosition(success, error);}
-            }
+
             var getLocation = document.getElementsByClassName('get-location')[0]
             if (typeof(getLocation) != 'undefined' && getLocation != null){
                 getLocation.addEventListener('click',function(){this.classList.add('disabled'); geoLocate();})
@@ -581,54 +598,54 @@ document.addEventListener('DOMContentLoaded', () => {
         //Card Effects
         const cardScale = document.querySelectorAll('.card-scale');
         if(cardScale.length){
-            cardScale.forEach(el => el.addEventListener('mouseenter', event => {el.querySelectorAll('img')[0].classList.add('card-scale-image');}));
-            cardScale.forEach(el => el.addEventListener('mouseleave', event => {el.querySelectorAll('img')[0].classList.remove('card-scale-image');}));
+            cardScale.forEach(el => el.addEventListener('mouseenter', event => {console.log(event); el.querySelectorAll('img')[0].classList.add('card-scale-image');}));
+            cardScale.forEach(el => el.addEventListener('mouseleave', event => {console.log(event); el.querySelectorAll('img')[0].classList.remove('card-scale-image');}));
         }
 
         const cardHide = document.querySelectorAll('.card-hide');
         if(cardHide.length){
-            cardHide.forEach(el => el.addEventListener('mouseenter', event => {el.querySelectorAll('.card-center, .card-bottom, .card-top, .card-overlay')[0].classList.add('card-hide-image');}));
-            cardHide.forEach(el => el.addEventListener('mouseleave', event => {el.querySelectorAll('.card-center, .card-bottom, .card-top, .card-overlay')[0].classList.remove('card-hide-image');}));
+            cardHide.forEach(el => el.addEventListener('mouseenter', event => {console.log(event); el.querySelectorAll('.card-center, .card-bottom, .card-top, .card-overlay')[0].classList.add('card-hide-image');}));
+            cardHide.forEach(el => el.addEventListener('mouseleave', event => {console.log(event); el.querySelectorAll('.card-center, .card-bottom, .card-top, .card-overlay')[0].classList.remove('card-hide-image');}));
         }
 
         const cardRotate = document.querySelectorAll('.card-rotate');
         if(cardRotate.length){
-            cardRotate.forEach(el => el.addEventListener('mouseenter', event => {el.querySelectorAll('img')[0].classList.add('card-rotate-image');}));
-            cardRotate.forEach(el => el.addEventListener('mouseleave', event => {el.querySelectorAll('img')[0].classList.remove('card-rotate-image');}));
+            cardRotate.forEach(el => el.addEventListener('mouseenter', event => {console.log(event); el.querySelectorAll('img')[0].classList.add('card-rotate-image');}));
+            cardRotate.forEach(el => el.addEventListener('mouseleave', event => {console.log(event); el.querySelectorAll('img')[0].classList.remove('card-rotate-image');}));
         }
 
         const cardGray = document.querySelectorAll('.card-grayscale');
         if (cardGray.length){
-            cardGray.forEach(el => el.addEventListener('mouseenter', event => {el.querySelectorAll('img')[0].classList.add('card-grayscale-image');}));
-            cardGray.forEach(el => el.addEventListener('mouseleave', event => {el.querySelectorAll('img')[0].classList.remove('card-grayscale-image');}));
+            cardGray.forEach(el => el.addEventListener('mouseenter', event => {console.log(event); el.querySelectorAll('img')[0].classList.add('card-grayscale-image');}));
+            cardGray.forEach(el => el.addEventListener('mouseleave', event => {console.log(event); el.querySelectorAll('img')[0].classList.remove('card-grayscale-image');}));
         }
 
         const cardBlur = document.querySelectorAll('.card-blur');
         if(cardBlur.length){
-            cardBlur.forEach(el => el.addEventListener('mouseenter', event => {el.querySelectorAll('img')[0].classList.add('card-blur-image');}));
-            cardBlur.forEach(el => el.addEventListener('mouseleave', event => {el.querySelectorAll('img')[0].classList.remove('card-blur-image');}));
+            cardBlur.forEach(el => el.addEventListener('mouseenter', event => {console.log(event); el.querySelectorAll('img')[0].classList.add('card-blur-image');}));
+            cardBlur.forEach(el => el.addEventListener('mouseleave', event => {console.log(event); el.querySelectorAll('img')[0].classList.remove('card-blur-image');}));
         }
-
+        function check_visited_links(){
+            var visited_links = JSON.parse(localStorage.getItem(pwaName+'_Visited_Links')) || [];
+            var links = document.querySelectorAll('.check-visited a');
+            for (let i = 0; i < links.length; i++) {
+                var that = links[i];
+                that.addEventListener('click',function(){
+                    var clicked_url = this.href;
+                    if (visited_links.indexOf(clicked_url)==-1) {
+                        visited_links.push(clicked_url);
+                        localStorage.setItem(pwaName+'_Visited_Links', JSON.stringify(visited_links));
+                    }
+                })
+                if (visited_links.indexOf(that.href)!== -1) {
+                    that.className += ' visited-link';
+                }
+            }
+        }
         //Adding Local Storage for Visited Links
         var checkVisited = document.querySelectorAll('.check-visited');
             if(checkVisited.length){
-            function check_visited_links(){
-                var visited_links = JSON.parse(localStorage.getItem(pwaName+'_Visited_Links')) || [];
-                var links = document.querySelectorAll('.check-visited a');
-                for (let i = 0; i < links.length; i++) {
-                    var that = links[i];
-                    that.addEventListener('click',function(e){
-                        var clicked_url = this.href;
-                        if (visited_links.indexOf(clicked_url)==-1) {
-                            visited_links.push(clicked_url);
-                            localStorage.setItem(pwaName+'_Visited_Links', JSON.stringify(visited_links));
-                        }
-                    })
-                    if (visited_links.indexOf(that.href)!== -1) {
-                        that.className += ' visited-link';
-                    }
-                }
-            }
+
             check_visited_links();
         }
 
@@ -646,7 +663,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         var adblockMessage = document.getElementById('adblock-message')
         if(adblockMessage){
-            var adblockEnabled = false;
+            // var adblockEnabled = false;
             document.body.innerHTML += '<div class="adsbygoogle" id="ad-detector"></div>';
             var adElement = document.getElementById('ad-detector');
             var adElementStyle = getComputedStyle(adElement, null);
@@ -681,13 +698,14 @@ document.addEventListener('DOMContentLoaded', () => {
             var scrollHeader = document.querySelectorAll('.header-auto-show');
             var pageTitle = document.querySelectorAll('.page-title');
             window.addEventListener('scroll', function() {
+                function showScrollAd(){scrollAd[0].classList.add('scroll-ad-visible');}
+                function hideScrollAd(){scrollAd[0].classList.remove('scroll-ad-visible');}
+                function showHeader(){scrollHeader[0].classList.add('header-active');}
+                function hideHeader(){scrollHeader[0].classList.remove('header-active');}
+                function hideTitle(){pageTitle[0].style.opacity ="0"}
+                function showTitle(){pageTitle[0].style.opacity ="1"}
                 if (document.querySelectorAll('.scroll-ad, .header-auto-show').length) {
-                    function showScrollAd(){scrollAd[0].classList.add('scroll-ad-visible');}
-                    function hideScrollAd(){scrollAd[0].classList.remove('scroll-ad-visible');}
-                    function showHeader(){scrollHeader[0].classList.add('header-active');}
-                    function hideHeader(){scrollHeader[0].classList.remove('header-active');}
-                    function hideTitle(){pageTitle[0].style.opacity ="0"}
-                    function showTitle(){pageTitle[0].style.opacity ="1"}
+
                     var window_height = window.outerWidth;
                     var total_scroll_height = document.documentElement.scrollTop
                     let inside_header = total_scroll_height <= 80;
@@ -717,11 +735,13 @@ document.addEventListener('DOMContentLoaded', () => {
         var stepperSub = document.querySelectorAll('.stepper-sub');
         if(stepperAdd.length){
             stepperAdd.forEach(el => el.addEventListener('click', event => {
+                console.log(event)
                 var currentValue = el.parentElement.querySelector('input').value
                 el.parentElement.querySelector('input').value = +currentValue + 1
             }))
 
             stepperSub.forEach(el => el.addEventListener('click', event => {
+                console.log(event)
                 var currentValue = el.parentElement.querySelector('input').value
                 el.parentElement.querySelector('input').value = +currentValue - 1
             }))
@@ -731,6 +751,7 @@ document.addEventListener('DOMContentLoaded', () => {
         var linkListToggle = document.querySelectorAll('[data-trigger-switch]:not([data-toggle-theme])');
         if(linkListToggle.length){
             linkListToggle.forEach(el => el.addEventListener('click', event => {
+                console.log(event)
                 var switchData = el.getAttribute('data-trigger-switch');
                 var getCheck = document.getElementById(switchData);
                 getCheck.checked ? getCheck.checked = false : getCheck.checked = true;
@@ -741,6 +762,7 @@ document.addEventListener('DOMContentLoaded', () => {
         var classicToggle = document.querySelectorAll('.classic-toggle');
         if(classicToggle.length){
             classicToggle.forEach(el => el.addEventListener('click', event=>{
+                console.log(event)
                 el.querySelector('i:last-child').classList.toggle('fa-rotate-180');
                 el.querySelector('i:last-child').style.transition = "all 250ms ease"
             }))
@@ -750,9 +772,10 @@ document.addEventListener('DOMContentLoaded', () => {
         var toastTrigger = document.querySelectorAll('[data-toast]');
         if(toastTrigger.length){
             toastTrigger.forEach(el => el.addEventListener('click', event => {
+                console.log(event)
                 var toastData = el.getAttribute('data-toast')
                 var notificationToast = document.getElementById(toastData);
-                var notificationToast = new bootstrap.Toast(notificationToast);
+                notificationToast = new bootstrap.Toast(notificationToast);
                 notificationToast.show();
             }));
         }
@@ -773,7 +796,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //Dropdown
         var dropdownElementList = [].slice.call(document.querySelectorAll('[data-bs-toggle="dropdown"]'))
         if(dropdownElementList.length){
-            var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+            dropdownElementList.map(function (dropdownToggleEl) {
             return new bootstrap.Dropdown(dropdownToggleEl);
             })
         }
@@ -807,7 +830,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 closeClass.forEach(function(e){e.classList.remove('disabled');})
             }
 
-            var workingHours = document.querySelectorAll('.working-hours[data-day]');
+            workingHours = document.querySelectorAll('.working-hours[data-day]');
             workingHours.forEach(function(entry) {
                 var matchDay = entry.getAttribute('data-day');
                 if (matchDay === day[0]){
@@ -840,6 +863,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.navigator.vibrate(0);
             })
             vibrateButton.forEach(el => el.addEventListener('click',e =>{
+                console.log(e)
                 var vibrateTime = el.getAttribute('data-vibrate');
                 window.navigator.vibrate(vibrateTime);
             }));
@@ -849,6 +873,7 @@ document.addEventListener('DOMContentLoaded', () => {
         var timedAd = document.querySelectorAll('[data-timed-ad]');
         if(timedAd.length){
             timedAd.forEach(el => el.addEventListener('click',e =>{
+                console.log(e)
                 var timedAdTime = el.getAttribute('data-timed-ad');
                 var timedAdData = el.getAttribute('data-menu');
                 var timedAdTimer = timedAdTime;
@@ -898,7 +923,7 @@ document.addEventListener('DOMContentLoaded', () => {
             var beforeVisited = document.querySelectorAll('.before-visited')[0];
             var visitBeforeTime = document.querySelectorAll('.visit-before-time')[0];
             var lastVisitValue = localStorage.getItem(pwaName+'-Last-Visited');
-            var d = new Date();
+            d = new Date();
             var strDate = d.getFullYear() + "/" + (d.getMonth()+1) + "/" + d.getDate();
             var strTime = d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
             if(!lastVisitValue){
@@ -944,7 +969,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             textSizeDefault[0].addEventListener('click',function(){
                 textSizeChanger[0].querySelectorAll('*').forEach(function(element) {
-                    const getFontSize = window.getComputedStyle(element).fontSize.split("px",2)[0]
+                    window.getComputedStyle(element).fontSize.split("px",2)[0]
                     element.style.fontSize = "";
                 });
             })
@@ -972,54 +997,57 @@ document.addEventListener('DOMContentLoaded', () => {
         if (window.location.protocol === "file:"){
             var linksLocal = document.querySelectorAll('a');
             linksLocal.forEach(el => el.addEventListener('mouseover', event => {
+                console.log(event)
                // console.log("You are seeing these errors because your file is on your local computer. For real life simulations please use a Live Server or a Local Server such as AMPPS or WAMPP or simulate a  Live Preview using a Code Editor like http://brackets.io (it's 100% free) - PWA functions and AJAX Page Transitions will only work in these scenarios.");
             }));
         }
 
         //Search Page
         var searchField = document.querySelectorAll('[data-search]');
+        function searchFunction(){
+            var searchStr = searchField[0].value;
+            var searchVal = searchStr.toLowerCase();
+            if (searchVal != '') {
+                searchResults[0].classList.remove('disabled-search-list');
+                var searchFilterItem = document.querySelectorAll('[data-filter-item]');
+                for (let i = 0; i < searchFilterItem.length; i++) {
+                    var searchData = searchFilterItem[i].getAttribute('data-filter-name');
+                    if(searchData.includes(searchVal)){
+                        searchFilterItem[i].classList.remove('disabled');
+                        if(searchTrending.length){searchTrending[0].classList.add('disabled');}
+                    } else {
+                        searchFilterItem[i].classList.add('disabled');
+                        if(searchTrending.length){searchTrending[0].classList.remove('disabled');}
+                    }
+                    var disabledResults = document.querySelectorAll(".search-results div")[0].getElementsByClassName("disabled").length;
+                    if(disabledResults === searchTotal){
+                        searchNoResults[0].classList.remove('disabled');
+                        if(searchTrending.length){searchTrending[0].classList.add('disabled');}
+                    } else {
+                        searchNoResults[0].classList.add('disabled');
+                        if(searchTrending.length){searchTrending[0].classList.add('disabled');}
+                    }
+                }
+            }
+            if (searchVal === '') {
+                searchResults[0].classList.add('disabled-search-list');
+                searchNoResults[0].classList.add('disabled');
+                if(searchTrending.length){searchTrending[0].classList.remove('disabled');}
+            }
+        }
         if(searchField.length){
             var searchResults = document.querySelectorAll('.search-results')
             var searchNoResults = document.querySelectorAll('.search-no-results');
             var searchTotal = document.querySelectorAll(".search-results div")[0].childElementCount;
             var searchTrending = document.querySelectorAll('.search-trending');
-            function searchFunction(){
-                var searchStr = searchField[0].value;
-                var searchVal = searchStr.toLowerCase();
-                if (searchVal != '') {
-                    searchResults[0].classList.remove('disabled-search-list');
-                    var searchFilterItem = document.querySelectorAll('[data-filter-item]');
-                    for (let i = 0; i < searchFilterItem.length; i++) {
-                        var searchData = searchFilterItem[i].getAttribute('data-filter-name');
-                        if(searchData.includes(searchVal)){
-                            searchFilterItem[i].classList.remove('disabled');
-                            if(searchTrending.length){searchTrending[0].classList.add('disabled');}
-                        } else {
-                            searchFilterItem[i].classList.add('disabled');
-                            if(searchTrending.length){searchTrending[0].classList.remove('disabled');}
-                        }
-                        var disabledResults = document.querySelectorAll(".search-results div")[0].getElementsByClassName("disabled").length;
-                        if(disabledResults === searchTotal){
-                            searchNoResults[0].classList.remove('disabled');
-                            if(searchTrending.length){searchTrending[0].classList.add('disabled');}
-                        } else {
-                            searchNoResults[0].classList.add('disabled');
-                            if(searchTrending.length){searchTrending[0].classList.add('disabled');}
-                        }
-                    }
-                }
-                if (searchVal === '') {
-                    searchResults[0].classList.add('disabled-search-list');
-                    searchNoResults[0].classList.add('disabled');
-                    if(searchTrending.length){searchTrending[0].classList.remove('disabled');}
-                }
-            };
+
 
             searchField[0].addEventListener('keyup', function() {searchFunction();})
             searchField[0].addEventListener('click', function() {searchFunction();})
 
             var searchClick = document.querySelectorAll('.search-trending a');
             searchClick.forEach(el => el.addEventListener('click', event => {
+                console.log(event)
                 var trendingResult = el.querySelectorAll('span')[0].textContent.toLowerCase();
                 searchField[0].value  = trendingResult;
                 searchField[0].click();
@@ -1054,7 +1082,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 var nameField = document.getElementById('contactNameField');
                 var mailField = document.getElementById('contactEmailField');
                 var textField = document.getElementById('contactMessageTextarea');
-                var validateMail = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+                var validateMail = /^([\w-.]+@([\w-]+\.)+[\w-]{2,4})?$/;
                 if(nameField.value === ''){
                     form.setAttribute('data-form','invalid');
                     nameField.classList.add('border-red-dark');
@@ -1118,9 +1146,10 @@ document.addEventListener('DOMContentLoaded', () => {
         var collapseBtn = document.querySelectorAll('[data-bs-toggle="collapse"]:not(.no-effect)');
         if(collapseBtn.length){
             collapseBtn.forEach(el => el.addEventListener('click',e =>{
+                console.log(e)
                 if(el.querySelectorAll('i').length){
                     el.querySelector('i').classList.toggle('fa-rotate-180')
-                };
+                }
             }));
         }
 
@@ -1135,6 +1164,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
             tabTrigger.forEach(el => el.addEventListener('click',e =>{
+                console.log(e)
                 var highlightColor = el.parentNode.getAttribute('data-highlight');
                 var tabParentGroup = el.parentNode.querySelectorAll('a');
                 tabParentGroup.forEach(function(e){
@@ -1148,17 +1178,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         //Extending Menu Functions
-        function menu(menuName, menuFunction, menuTimeout){
-            setTimeout(function(){
-                if(menuFunction === "show"){
-                    return document.getElementById(menuName).classList.add('menu-active'),
-                    document.querySelectorAll('.menu-hider')[0].classList.add('menu-active')
-                } else {
-                    return document.getElementById(menuName).classList.remove('menu-active'),
-                    document.querySelectorAll('.menu-hider')[0].classList.remove('menu-active')
-                }
-            },menuTimeout)
-        }
+        // function menu(menuName, menuFunction, menuTimeout){
+        //     setTimeout(function(){
+        //         if(menuFunction === "show"){
+        //             return document.getElementById(menuName).classList.add('menu-active'),
+        //             document.querySelectorAll('.menu-hider')[0].classList.add('menu-active')
+        //         } else {
+        //             return document.getElementById(menuName).classList.remove('menu-active'),
+        //             document.querySelectorAll('.menu-hider')[0].classList.remove('menu-active')
+        //         }
+        //     },menuTimeout)
+        // }
 
         var autoActivate = document.querySelectorAll('[data-auto-activate]');
         if(autoActivate.length){
@@ -1220,6 +1250,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => data.text())
             .then(html => e.innerHTML = html)
             .then(data => {
+                console.log(data)
                 setTimeout(function(){
                     if(dataMenuLoad[dataMenuLoad.length-1] === e){
                         menuFunction();
@@ -1272,6 +1303,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             var showOffline = document.querySelectorAll('.show-offline');
             showOffline.forEach(el => el.addEventListener('click', event => {
+                console.log(event)
                 document.getElementsByClassName('offline-message')[0].classList.add('offline-message-active');
                 setTimeout(function(){document.getElementsByClassName('offline-message')[0].classList.remove('offline-message-active');},1500)
             }));
@@ -1310,14 +1342,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         //Check if Online / Offline
-        function updateOnlineStatus(event) {var condition = navigator.onLine ? "online" : "offline"; isOnline(); }
-        function updateOfflineStatus(event) {isOffline();}
+        function updateOnlineStatus() {navigator.onLine ? "online" : "offline"; isOnline(); }
+        function updateOfflineStatus() {isOffline();}
         window.addEventListener('online',  updateOnlineStatus);
         window.addEventListener('offline', updateOfflineStatus);
 
         //iOS Badge
         const iOSBadge = document.querySelectorAll('.simulate-iphone-badge');
         iOSBadge.forEach(el => el.addEventListener('click',e =>{
+            console.log(e)
             document.getElementsByClassName('add-to-home')[0].classList.add('add-to-home-visible', 'add-to-home-ios');
             document.getElementsByClassName('add-to-home')[0].classList.remove('add-to-home-android');
         }));
@@ -1325,6 +1358,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //Android Badge
         const AndroidBadge = document.querySelectorAll('.simulate-android-badge');
         AndroidBadge.forEach(el => el.addEventListener('click',e =>{
+            console.log(e)
             document.getElementsByClassName('add-to-home')[0].classList.add('add-to-home-visible', 'add-to-home-android');
             document.getElementsByClassName('add-to-home')[0].classList.remove('add-to-home-ios');
         }));
@@ -1332,10 +1366,19 @@ document.addEventListener('DOMContentLoaded', () => {
         //Remove Add to Home Badge
         const addToHomeBadgeClose = document.querySelectorAll('.add-to-home');
         addToHomeBadgeClose.forEach(el => el.addEventListener('click',e =>{
+            console.log(e)
             document.getElementsByClassName('add-to-home')[0].classList.remove('add-to-home-visible');
         }));
 
-
+        function showInstallPrompt() {
+            setTimeout(function(){
+                if (!window.matchMedia('(display-mode: fullscreen)').matches) {
+                    console.log('Triggering PWA Window for Android')
+                    document.getElementById('menu-install-pwa-android').classList.add('menu-active');
+                    document.querySelectorAll('.menu-hider')[0].classList.add('menu-active');
+                }
+            },3500);
+        }
         //PWA Settings
         if(isPWA === true){
             var checkPWA = document.getElementsByTagName('html')[0];
@@ -1348,7 +1391,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 //Setting Timeout Before Prompt Shows Again if Dismissed
                 var hours = pwaRemind * 24; // Reset when storage is more than 24hours
-                var now = Date.now();
+                now = Date.now();
                 var setupTime = localStorage.getItem(pwaName+'-PWA-Timeout-Value');
                 if (setupTime == null) {
                     localStorage.setItem(pwaName+'-PWA-Timeout-Value', now);
@@ -1360,6 +1403,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const pwaClose = document.querySelectorAll('.pwa-dismiss');
                 pwaClose.forEach(el => el.addEventListener('click',e =>{
+                    console.log(e)
                     const pwaWindows = document.querySelectorAll('#menu-install-pwa-android, #menu-install-pwa-ios');
                     for(let i=0; i < pwaWindows.length; i++){pwaWindows[i].classList.remove('menu-active');}
                     localStorage.setItem(pwaName+'-PWA-Timeout-Value', now);
@@ -1369,18 +1413,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 //Trigger Install Prompt for Android
                 const pwaWindows = document.querySelectorAll('#menu-install-pwa-android, #menu-install-pwa-ios');
+
                 if(pwaWindows.length){
                     if (isMobile.Android()) {
                         if (localStorage.getItem(pwaName+'-PWA-Prompt') != "install-rejected") {
-                            function showInstallPrompt() {
-                                setTimeout(function(){
-                                    if (!window.matchMedia('(display-mode: fullscreen)').matches) {
-                                        console.log('Triggering PWA Window for Android')
-                                        document.getElementById('menu-install-pwa-android').classList.add('menu-active');
-                                        document.querySelectorAll('.menu-hider')[0].classList.add('menu-active');
-                                    }
-                                },3500);
-                            }
+
                             var deferredPrompt;
                             window.addEventListener('beforeinstallprompt', (e) => {
                                 e.preventDefault();
@@ -1390,6 +1427,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                         const pwaInstall = document.querySelectorAll('.pwa-install');
                         pwaInstall.forEach(el => el.addEventListener('click', e => {
+                            console.log(e)
                             deferredPrompt.prompt();
                             deferredPrompt.userChoice
                                 .then((choiceResult) => {
@@ -1409,6 +1447,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 });
                         }));
                         window.addEventListener('appinstalled', (evt) => {
+                            console.log(evt)
                             document.getElementById('menu-install-pwa-android').classList.remove('menu-active');
                             document.querySelectorAll('.menu-hider')[0].classList.remove('menu-active');
                         });
@@ -1442,12 +1481,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         //Lazy Loading
-        var lazyLoad = new LazyLoad();
+        // var lazyLoad = new LazyLoad();
 
         // Check Documentation folder for detailed explanations on
         // Externally loading Javascript files for better performance.
 
-        var plugIdent, plugClass, plugMain, plugCall;
+        // var plugIdent, plugClass, plugMain, plugCall;
         var plugLoc = "plugins/"
 
         let plugins = [
@@ -1574,17 +1613,17 @@ document.addEventListener('DOMContentLoaded', () => {
     //End of Init Template
     if(isAJAX === true){
         if(window.location.protocol !== "file:"){
-            const options = {
-                containers: ["#page"],
-                cache:false,
-                animateHistoryBrowsing: false,
-                plugins: [
-                    new SwupPreloadPlugin()
-                ],
-                linkSelector:'a:not(.external-link):not(.default-link):not([href^="https"]):not([href^="http"]):not([data-gallery])'
-            };
-            const swup = new Swup(options);
-            document.addEventListener('swup:pageView',(e) => { init_template(); })
+            // const options = {
+            //     containers: ["#page"],
+            //     cache:false,
+            //     animateHistoryBrowsing: false,
+            //     plugins: [
+            //         new SwupPreloadPlugin()
+            //     ],
+            //     linkSelector:'a:not(.external-link):not(.default-link):not([href^="https"]):not([href^="http"]):not([data-gallery])'
+            // };
+            // const swup = new Swup(options);
+            document.addEventListener('swup:pageView',() => { init_template(); })
         }
     }
 

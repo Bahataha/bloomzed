@@ -54,13 +54,5 @@ export default {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     }
   }
-    // computed: {
-   //   ...mapGetters(['user'])
-   // },
-   // mounted(){
-   //     if (!this.user){
-   //         this.$router.push('/');
-   //     }
-   // }
  }
 </script>

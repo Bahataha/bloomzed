@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <Footer />
     <div v-if="sessionStorage.mobile == null">
       <LoginForm />
     </div>
@@ -16,6 +17,7 @@
 import LoginForm from '@/components/LoginForm.vue'
 import Otp from '@/components/OtpForm.vue'
 import PasswForm from "@/components/PasswForm";
+import Footer from "@/components/Footer";
 export default {
   data(){
     return {
@@ -26,7 +28,8 @@ export default {
   components: {
     LoginForm,
     Otp,
-    PasswForm
+    PasswForm,
+    Footer
   },
   mounted(){
     if(sessionStorage.getItem('session')){
