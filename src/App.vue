@@ -18,6 +18,17 @@ import 'bootstrap/dist/js/bootstrap.min'
 // import axios from "axios";
 
 export default {
+  metaInfo(){
+    return {
+      meta: [
+        { 'http-equiv': 'Content-Type', content: 'text/html; charset=utf-8'},
+        { name: 'apple-mobile-web-app-capable', content: 'yes' },
+        { name: 'mobile-web-app-capable', content: 'yes' },
+        { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover'}
+      ]
+    }
+  },
   name: 'App',
   mounted() {
     document.body.classList.add('theme-light')
