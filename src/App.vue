@@ -10,11 +10,26 @@
 <!--<script type="text/javascript" src="@/assets/scripts/bootstrap.min.js"></script>-->
 <!--<script type="text/javascript" src="@/assets/scripts/custom.js"></script>-->
 <script>
+import { StatusBar } from '@capacitor/status-bar';
+
+// const { SplashScreen } = Plugins;
+// SplashScreen.hide();
 import 'bootstrap/dist/js/bootstrap.min'
 // require('./assets/scripts/bootstrap.min')
 // import './assets/scripts/custom'
+// StatusBar.setOverlaysWebView({ overlay: true });
 
 
+// StatusBar.setStyle({ style: Style.Light });
+
+
+// const hideStatusBar = async () => {
+StatusBar.hide();
+// };
+
+// console.log(hideStatusBar)
+
+// StatusBar.hide();
 // import axios from "axios";
 
 export default {
@@ -25,6 +40,7 @@ export default {
         { name: 'apple-mobile-web-app-capable', content: 'yes' },
         { name: 'mobile-web-app-capable', content: 'yes' },
         { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
+        { name: 'mobile-web-app-status-bar-style', content: 'black-translucent' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover'}
       ]
     }
