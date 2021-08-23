@@ -1,11 +1,12 @@
 <template>
   <div>
     <form @submit.prevent="login">
-      <div class="page-title page-title-fixed" style="opacity: 1;">
-        <h1>Login</h1>
-      </div>
-      <div class="page-title-clear"></div>
+
       <div class="page-content">
+        <div class="page-title page-title-fixed" style="margin-top: 0">
+          <h1>Login</h1>
+        </div>
+        <div class="page-title-clear" style="height: calc(50px + (env(safe-area-inset-top))*0.8) !important"></div>
         <div class="card card-style">
           <div class="content mb-0">
             <h3></h3>

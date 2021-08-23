@@ -57,6 +57,16 @@ const routes = [
       ]
     },
     component: () => import(/* webpackChunkName: "about" */ '../views/Component.vue')
+  },
+  {
+    path: '/status',
+    name: 'status',
+    meta: {
+      middleware: [
+        guest
+      ]
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/Status.vue')
   }
 ]
 

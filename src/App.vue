@@ -2,6 +2,7 @@
   <div class="">
 <!--    <div id="preloader"><div class="spinner-border color-highlight" role="status"></div></div>-->
     <div id="page">
+      <Header />
       <router-view />
     </div>
   </div>
@@ -10,27 +11,15 @@
 <!--<script type="text/javascript" src="@/assets/scripts/bootstrap.min.js"></script>-->
 <!--<script type="text/javascript" src="@/assets/scripts/custom.js"></script>-->
 <script>
-import { StatusBar } from '@capacitor/status-bar';
-
-// const { SplashScreen } = Plugins;
-// SplashScreen.hide();
+import { StatusBar, Style } from '@capacitor/status-bar';
+import Header from "@/components/Header";
 import 'bootstrap/dist/js/bootstrap.min'
 // require('./assets/scripts/bootstrap.min')
 // import './assets/scripts/custom'
-// StatusBar.setOverlaysWebView({ overlay: true });
+StatusBar.setOverlaysWebView({ overlay: true });
 
+StatusBar.setStyle({ style: Style.Light });
 
-// StatusBar.setStyle({ style: Style.Light });
-
-
-// const hideStatusBar = async () => {
-StatusBar.hide();
-// };
-
-// console.log(hideStatusBar)
-
-// StatusBar.hide();
-// import axios from "axios";
 
 export default {
   metaInfo(){
@@ -48,6 +37,9 @@ export default {
   name: 'App',
   mounted() {
     document.body.classList.add('theme-light')
+  },
+  components:{
+    Header
   }
 }
 </script>

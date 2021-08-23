@@ -2,7 +2,6 @@
   <div class="home">
     <Footer />
     <div class="page-content">
-      <div class="page-title-clear"></div>
       <div class="card card-style">
         <div class="content mb-0">
 
@@ -2289,6 +2288,7 @@
 
 <script>
 import Footer from "@/components/Footer";
+
 export default {
   name: "Component",
   components:{
