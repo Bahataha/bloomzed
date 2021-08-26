@@ -18,6 +18,16 @@ const routes = [
     }
   },
   {
+    path: '/page',
+    name: 'Page',
+    component: Home,
+    meta: {
+      middleware: [
+        guest
+      ]
+    }
+  },
+  {
     path: '/otp',
     name: 'Otp',
     component: Home,
