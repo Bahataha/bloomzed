@@ -77,6 +77,16 @@ const routes = [
       ]
     },
     component: () => import(/* webpackChunkName: "about" */ '../views/Status.vue')
+  },
+  {
+    path: '/verigram',
+    name: 'verigram',
+    meta: {
+      middleware: [
+        guest
+      ]
+    },
+    component: () => import(/* webpackChunkName: "about" */ '../views/Verigram.vue')
   }
 ]
 

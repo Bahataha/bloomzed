@@ -41,47 +41,47 @@ export default {
         var wrappers = document.querySelectorAll('.header, #footer-bar, .page-content');
 
         menuOpen.forEach(el => el.addEventListener('click',e =>{
-                    console.log(e)
-                    //Close Existing Opened Menus
-                    const activeMenu = document.querySelectorAll('.menu-active');
-                    for(let i=0; i < activeMenu.length; i++){activeMenu[i].classList.remove('menu-active');}
-                    //Open Clicked Menu
-                    var menuData = el.getAttribute('data-menu');
-                    document.getElementById(menuData).classList.add('menu-active');
-                    document.getElementsByClassName('menu-hider')[0].classList.add('menu-active');
-                    //Check and Apply Effects
-                    var menu = document.getElementById(menuData);
-                    var menuEffect = menu.getAttribute('data-menu-effect');
-                    var menuLeft = menu.classList.contains('menu-box-left');
-                    var menuRight = menu.classList.contains('menu-box-right');
-                    var menuTop = menu.classList.contains('menu-box-top');
-                    var menuBottom = menu.classList.contains('menu-box-bottom');
-                    var menuWidth = menu.offsetWidth;
-                    var menuHeight = menu.offsetHeight;
-                    var menuTimeout = menu.getAttribute('data-menu-hide');
+            console.log(e)
+            //Close Existing Opened Menus
+            const activeMenu = document.querySelectorAll('.menu-active');
+            for(let i=0; i < activeMenu.length; i++){activeMenu[i].classList.remove('menu-active');}
+            //Open Clicked Menu
+            var menuData = el.getAttribute('data-menu');
+            document.getElementById(menuData).classList.add('menu-active');
+            document.getElementsByClassName('menu-hider')[0].classList.add('menu-active');
+            //Check and Apply Effects
+            var menu = document.getElementById(menuData);
+            var menuEffect = menu.getAttribute('data-menu-effect');
+            var menuLeft = menu.classList.contains('menu-box-left');
+            var menuRight = menu.classList.contains('menu-box-right');
+            var menuTop = menu.classList.contains('menu-box-top');
+            var menuBottom = menu.classList.contains('menu-box-bottom');
+            var menuWidth = menu.offsetWidth;
+            var menuHeight = menu.offsetHeight;
+            var menuTimeout = menu.getAttribute('data-menu-hide');
 
-                    if(menuTimeout){
-                        setTimeout(function(){
-                            document.getElementById(menuData).classList.remove('menu-active');
-                            document.getElementsByClassName('menu-hider')[0].classList.remove('menu-active');
-                        },menuTimeout)
-                    }
+            if(menuTimeout){
+                setTimeout(function(){
+                    document.getElementById(menuData).classList.remove('menu-active');
+                    document.getElementsByClassName('menu-hider')[0].classList.remove('menu-active');
+                },menuTimeout)
+            }
 
-                    if(menuEffect === "menu-push"){
-                        menuWidth = document.getElementById(menuData).getAttribute('data-menu-width');
-                        if(menuLeft){for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateX("+menuWidth+"px)"}}
-                        if(menuRight){for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateX(-"+menuWidth+"px)"}}
-                        if(menuBottom){for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateY(-"+menuHeight+"px)"}}
-                        if(menuTop){for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateY("+menuHeight+"px)"}}
-                    }
-                    if(menuEffect === "menu-parallax"){
-                        menuWidth = document.getElementById(menuData).getAttribute('data-menu-width');
-                        if(menuLeft){for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateX("+menuWidth/10+"px)"}}
-                        if(menuRight){for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateX(-"+menuWidth/10+"px)"}}
-                        if(menuBottom){for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateY(-"+menuHeight/5+"px)"}}
-                        if(menuTop){for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateY("+menuHeight/5+"px)"}}
-                    }
-                }));
+            if(menuEffect === "menu-push"){
+                menuWidth = document.getElementById(menuData).getAttribute('data-menu-width');
+                if(menuLeft){for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateX("+menuWidth+"px)"}}
+                if(menuRight){for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateX(-"+menuWidth+"px)"}}
+                if(menuBottom){for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateY(-"+menuHeight+"px)"}}
+                if(menuTop){for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateY("+menuHeight+"px)"}}
+            }
+            if(menuEffect === "menu-parallax"){
+                menuWidth = document.getElementById(menuData).getAttribute('data-menu-width');
+                if(menuLeft){for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateX("+menuWidth/10+"px)"}}
+                if(menuRight){for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateX(-"+menuWidth/10+"px)"}}
+                if(menuBottom){for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateY(-"+menuHeight/5+"px)"}}
+                if(menuTop){for(let i=0; i < wrappers.length; i++){wrappers[i].style.transform = "translateY("+menuHeight/5+"px)"}}
+            }
+        }));
     }
 
   }

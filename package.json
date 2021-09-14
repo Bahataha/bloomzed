@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@capacitor/android": "^3.1.1",
+    "@capacitor/camera": "^1.0.4",
     "@capacitor/cli": "^3.1.1",
     "@capacitor/core": "^3.1.1",
     "@capacitor/ios": "^3.1.1",
@@ -51,7 +52,9 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "no-unused-vars": "off"
+    }
   },
   "browserslist": [
     "> 1%",
