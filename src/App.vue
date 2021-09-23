@@ -8,16 +8,9 @@
   </div>
 </template>
 
-<!--<script type="text/javascript" src="@/assets/scripts/bootstrap.min.js"></script>-->
-<!--<script type="text/javascript" src="@/assets/scripts/custom.js"></script>-->
-<script src="@/assets/scripts/verigram/veridoc.js"></script>
 <script>
 import { StatusBar, Style } from '@capacitor/status-bar';
 import Header from "@/components/Header";
-// import 'bootstrap/dist/js/bootstrap.min'
-import veridoc from '@/assets/scripts/verigram/veridoc.js';
-// require('./assets/scripts/bootstrap.min')
-// import './assets/scripts/custom'
 StatusBar.setOverlaysWebView({ overlay: true });
 
 StatusBar.setStyle({ style: Style.Light });

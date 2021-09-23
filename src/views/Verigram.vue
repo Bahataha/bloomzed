@@ -1,9 +1,9 @@
 <template>
     <div>
         <Footer />
-        <div id="id_veridoc"></div>
-        <button v-on:click="startScan()" id="startButton" autocomplete="off">Start scanning</button>
-        <p id="results">No scanning results yet</p>
+        <div id="id_verilive" style="position: absolute; width: 100vh; height: 100vh; left: -25vh"></div>
+
+        <pre id="results"></pre>
     </div>
 </template>
 
@@ -13,81 +13,161 @@
 
 import Footer from "@/components/Footer";
 
-
+const url = "https://services.verigram.ai:8443/verilive/verilive"
+const apiKey = "LFVHos4CAHkCemfS3PQe9DWdenO2zOh2";
 export default {
   name: "Verigram",
   components:{
-    Footer,
-    veridoc
+    Footer
   },
   data(){
       return {
           session: ''
       }
   },
-  mounted(){  
-    this.onInitializeButtonClick()
+  mounted(){
+    const plugin = document.createElement("script");
+    plugin.setAttribute(
+        "src",
+        "https://s3.eu-central-1.amazonaws.com/verilive-statics.verigram.ai/verilive.js"
+    );
+    document.head.appendChild(plugin);
+    window.addEventListener("load", this.runVerilive, false);
+    setTimeout(() => this.onStartButtonClick(), 2000)
   },
   methods:{
-    onInitializeButtonClick(){
-        veridoc.init("https://services.verigram.ai:8443/veridoc/ru/veridoc/",
-        'LFVHos4CAHkCemfS3PQe9DWdenO2zOh2', this.successCallback, this.errorCallback, this.gotPhotoCallback)
-        .then(() => {
-            veridoc.setDocType(1);
-            veridoc.setRecognitionMode(1);
-            veridoc.setMirrorPreviewForWebCameras(true);
-            veridoc.setIsGlareCheckNeeded(true);
-        })
-        .catch((e) => {
-            // E.g. Show error to user.
-        });
-        setTimeout(this.onStartButtonClick, 1000);
+    runVerilive() {
+      console.log('asasff')
+      // document.getElementById('info_verilive_js_version').innerHTML = verilive.version
+
+      let configure;
+      configure = {
+        'recordVideo': false,
+        'videoBitrate': 2500000,
+        'rotated': false,
+        'lang': "custom",
+
+        'render': {
+          'oval': true,
+          'faceContourInsteadOfOval': true,
+          'ovalRingColor': {
+            'default': '#f5f542',
+            'actionSuccess': '#00ba00',
+            'actionFailure': '#d00000',
+            'sessionSuccess': '#00ba00',
+            'sessionFailure': '#d00000',
+          },
+          'ovalWidth': 1.0,
+
+          'overlay': true,
+          'overlayColor': {
+            'default' : '#2f4f4f',
+          },
+          'overlayTransparency': {
+            'default': 0.55,
+          },
+
+          'arrow': true,
+          'arrowColor': {
+            'default': '#f0f0f0',
+          },
+          'arrowProgressColor': {
+            'default': '#404040',
+          },
+
+          'hint': true,
+          'hintTextColor': {
+            "default": "#eee",
+          },
+          'hintFontType': "Arial",
+          'hintUseProgressiveFontSize': true,
+          'hintProgressiveFontSizeMultiplier': 1.0,
+          'hintFontSize': 25,
+          "hintCloudColor": {
+            "default": "#2d312f",
+          },
+
+          'videoUploadProgressBar': true,
+          'videoUploadProgressBarColor1': "#FFEA82",
+          'videoUploadProgressBarColor2': "#eee",
+        },
+
+        'hints': {
+          'noHint': '',
+          'noFace': 'Вас Не Видно',
+          'badLight': "Выравните Освещение",
+          'closer': 'Ближе',
+          'away': 'Отдалитесь',
+          'closerToCenter': 'Ближе к Центру Экрана',
+
+          'targetLeft': 'Медленно Поворачивайте Голову Влево',
+          'targetRight': 'Медленно Поворачивайте Голову Вправо',
+          'targetCenter': 'Посмотрите Прямо',
+
+          'sessionSuccess': 'Вы Прошли!',
+          'sessionFailure': 'Вы Не Прошли!',
+          'sessionError': 'Произошла какая-то ошибка. Попробуйте перезапустить',
+        },
+      };
+
+      verilive.successCallback = this.successCallback;
+      verilive.failCallback = this.failCallback;
+      verilive.errorCallback = this.errorCallback;
+      verilive.updateCallback = this.updateCallback;
+      verilive.videoRecordingNotSupportedCallback = this.videoRecordingNotSupportedCallback;
+      verilive.videoReadyCallback = this.videoReadyCallback;
+      verilive.videoSentCallback = this.videoSentCallback;
+      verilive.videoSendProgressCallback = this.videoSendProgressCallback;
+      verilive.videoSendErrorCallback = this.videoSendErrorCallback;
+
+      verilive.init(url, apiKey, configure)
+          .then(() => {
+            // onStartButtonClick()
+          })
+          .catch((error) => {
+            document.getElementById("results").innerHTML = error;
+          });
     },
 
-    onStartButtonClick() {
-        
-    },
-    showResults(data) {
-        var allResults = "";
-        for (var prop in data) {
-            if (data.hasOwnProperty(prop)) {
-                var propValue = data[prop].replace(/</g, "&lt;");
-                
-                if (prop.includes('picture') || prop.includes('personal_signature') ||
-                        prop.includes('image')) {
-                    allResults += prop + ': ' + propValue.substring(0, 20) + '... </br>';
-                } else {
-                    allResults += prop + ': ' + propValue + ' </br>';
-                }
-            }
-        }
-        
-        document.getElementById("results").innerHTML = allResults;
+    successCallback(){
+      document.getElementById("results").innerHTML = JSON.stringify(data, undefined, 2).replace(/</g, "&lt;");
     },
 
-    checkRecognitionWarnings() {
-        var recognitionWarnings = veridoc.getRecognitionWarnings();
-        if (recognitionWarnings.includes(RecognitionWarning.DOCUMENT_EXPIRED)) {
-            console.log('This document expired!');
-        }
-        if (recognitionWarnings.includes(RecognitionWarning.INCONSISTENT_TRANSLITERATION)) {
-            console.log('Transliteration check fail warning!');
-        }
-    },
-
-    successCallback(data) {
-        this.showResults(data);
-        this.checkRecognitionWarnings();
+    failCallback(data) {
+      // E.g. Show to user, say to retry again
+      document.getElementById("results").innerHTML = JSON.stringify(data, undefined, 2).replace(/</g, "&lt;");
     },
 
     errorCallback(data) {
-        this.showResults(data);
+      // E.g. Show to user, say to retry again
+      document.getElementById("results").innerHTML = JSON.stringify(data, undefined, 2).replace(/</g, "&lt;");
     },
 
-    gotPhotoCallback() {},
-    startScan(){
-        var session_token = veridoc.start();
-        console.log('sesion_token is: ' + session_token);
+    updateCallback(data) {
+      // console.log(data);
+    },
+
+    videoRecordingNotSupportedCallback() {
+      console.log("video recording is not supported on this browser/device");
+    },
+
+    videoReadyCallback(blob) {
+      window.video_blob = blob
+      console.log(`Video is ready`)
+    },
+
+    videoSendProgressCallback(event) {
+      // console.log("Downloaded " + event.loaded + "bytes of " + event.total);
+    },
+
+    videoSendErrorCallback() {
+      console.log('videoSendErrorCallback');
+    },
+    onStartButtonClick() {
+      const token = verilive.start();
+      console.log(verilive)
+      console.log(verilive.name + ': Token - ' + token);
+      document.getElementById('info_current_session').innerHTML = token
     }
   },
     
