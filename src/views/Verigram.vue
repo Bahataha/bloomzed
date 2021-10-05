@@ -1,7 +1,6 @@
 <template>
     <div>
         <Footer />
-<!--        <div id="id_verilive" style="posi5tion: absolute; width: 100vh; height: 100vh; left: -25vh"></div>-->
         <div style="width: 100vw; height: 100%">
           <video style="width: 100vw; height: 100%" autoplay="true" id="video">
           </video>
@@ -26,7 +25,7 @@ export default {
   mounted() {
     var video = document.querySelector("#video");
     if (navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({ video: true })
+      navigator.mediaDevices.getUserMedia({ video:{ facingMode: { exact: "environment" } } })
           .then(function (stream) {
             video.srcObject = stream;
           })
